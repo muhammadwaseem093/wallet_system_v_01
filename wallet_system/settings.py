@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*y7j0=&^j!h9%$+sdzn&xn08p^5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wallet-system-v-01.vercel.app', 'localhost']
 
 
 # Application definition
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoice.middleware.WhiteNoiseMiddleware',
 ]
 
 
@@ -85,12 +86,12 @@ WSGI_APPLICATION = "wallet_system.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wallet_db',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wallet_system',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
