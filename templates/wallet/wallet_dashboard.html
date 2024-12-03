@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Welcome to your Wallet</h1>
+    <p>Balance: {{ wallet.balance }}</p>
+    <h2>Recent Transactions</h2>
+    <ul>
+        {% for transaction in transactions %}
+            <li>{{ transaction.timestamp }} - {{ transaction.transaction_type }} - {{ transaction.amount }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

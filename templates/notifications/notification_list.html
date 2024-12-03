@@ -1,0 +1,17 @@
+<!-- wallet_system/templates/notifications/notification_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Notifications</h2>
+<ul>
+    {% for notification in notifications %}
+        <li class="{% if notification.is_read %}read{% else %}unread{% endif %}">
+            <strong>{{ notification.title }}</strong>
+            <p>{{ notification.message }}</p>
+            <small>{{ notification.created_at|date:"d M Y H:i" }}</small>
+        </li>
+    {% empty %}
+        <p>No notifications available.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
