@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*y7j0=&^j!h9%$+sdzn&xn08p^5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['wallet-system-v-01.vercel.app', 'localhost']
 
