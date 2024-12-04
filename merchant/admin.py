@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+# write code for admin dashboard 
+from .models import Merchant
+
+admin.site.register(Merchant)
+
+
+
+
