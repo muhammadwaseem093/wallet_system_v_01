@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout,  authenticate
+from django.contrib.auth import login as auth_login, logout,  authenticate
 from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == "POST":
@@ -27,20 +28,29 @@ def login(request):
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)
-                messages.success(request, 'User Successfully Login!')
-                return redirect('wallet:dashboard')
+                auth_login(request, user)
+                messages.success(request, 'User successfully logged in!')
+                return redirect('dashboard')  # Replace 'wallet:dashboard' with your dashboard URL name
             else:
-                return HttpResponse('Invalid Login Credentials', status=401)
+                messages.error(request, 'Invalid login credentials.')
+                return render(request, 'users/login.html', {'form': form})
         else:
-            return HttpResponse('Invalid Form ', status=401)
+            messages.error(request, 'Invalid form submission. Please check your input.')
     else:
         form = AuthenticationForm()
-        messages.success(request, 'User Successfully login!')
-    return render(request, 'user/login.html', {'form':form}) 
     
+    return render(request, 'user/login.html', {'form': form})
     
 def logout(request):
     logout(request)
     messages.success(request, 'You have been loggedout successfully')
     return redirect('user:login') 
+
+@login_required
+def dashboard(request):
+    if request.user.is_staff:
+        return redirect('admin:index')
+    elif request.user.groups.filter(name="Merchant").exists():
+        return redirect(request, 'merchant-dashboard.html')
+    else:
+        return render(request, 'user/dashboard.html')

@@ -11,8 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 import os
+import environ
+
+# Initialize environment variables
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*y7j0=&^j!h9%$+sdzn&xn08p^5"
+SECRET_KEY = env('SECRET_KEY', default="django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*y7j0=&^j!h9%$+sdzn&xn08p^5")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 
 # Application definition
@@ -38,13 +43,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'corsheaders',  # For cross-origin requests if needed
-    'users',         # Custom users app
-    'wallet',        # Wallet app
-    'merchant',      # Merchant app
-    'payment_gateway',  # Payment gateway app
-    'notifications',  # Notification app
+    "rest_framework",
+    "corsheaders",  # For cross-origin requests if needed
+    "users",         # Custom users app
+    "wallet",        # Wallet app
+    "merchant",      # Merchant app
+    "payment_gateway",  # Payment gateway app
+    "notifications",  # Notification app
 ]
 
 MIDDLEWARE = [
@@ -55,9 +60,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # 'whitenoice.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",  # For handling cross-origin requests
 ]
-
 
 ROOT_URLCONF = "wallet_system.urls"
 
@@ -78,25 +82,29 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "wallet_system.wsgi.application"
-# dd CORS support if needed
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-# ]
+
+# CORS support for external clients
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+])
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wallet_db',
-        'USER':'root',
-        'PASSWORD':'root',
-        'HOST':'localhost',
-        'PORT':'3306',
-        
+        'NAME': env('DB_NAME', default='wallet_db'),
+        'USER': env('DB_USER', default='root'),
+        'PASSWORD': env('DB_PASSWORD', default='root'),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default='3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',  # For full Unicode support
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -107,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 8},
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
@@ -115,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -135,6 +143,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # For example, if you have a static folder in the root of the project
 ]
@@ -143,3 +153,29 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# DRF settings for API security
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+# Logging for debugging and production
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG" if DEBUG else "INFO",
+    },
+}
