@@ -4,13 +4,9 @@ from .models import Wallet
 from django.contrib.auth.decorators import login_required
 
 @login_required
-def wallet_dashboard(request):
-    try:
-        wallet = Wallet.objects.get(user=request.user)
-    except Wallet.DoesNotExist:
-        wallet = Wallet.objects.create(user=request.user)
-    return render(request, 'wallet/wallet_dashboard.html', {'wallet': wallet})
-
+def dashboard(request):
+    wallet = Wallet.objects.get(user=request.user)
+    return render(request, 'wallet/dashboard.html', {'wallet': wallet})
 # @login_required
 # def deposit(request):
 #     wallet = Wallet.objects.get(user=request.user)

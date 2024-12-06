@@ -28,10 +28,23 @@
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
+                            {% if username_exists %}
+                                <p class="text-danger">Username already exists</p>
+                            {% endif %}
+                            {% if username_invalid %}
+                                <p class="text-danger">Username must be alphanumeric</p>
+                            {% endif %}
+
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" required>
+                            {% if email_exists %}
+                                <p class="text-danger">Email already exists</p>
+                            {% endif %}
+                            {% if email_invalid %}
+                                <p class="text-danger">Email is invalid</p>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- Column 2 -->
@@ -39,18 +52,25 @@
                         <div class="mb-3">
                             <label for="password1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password1" name="password1" required>
+                            {% if password_invalid %}
+                                <p class="text-danger">Password must be at least 8 characters long</p>
+                            {% endif %}
                         </div>
                         <div class="mb-3">
                             <label for="password2" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="password2" name="password2" required>
+                            {% if password_mismatch %}
+                                <p class="text-danger">Passwords do not match</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <!-- Full-width button -->
                 <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                
             </form>
             <div class="social-login mt-4 text-center">
-                <p>Sign Up in via</p>
+                <p>Sign Up via</p>
                 <div>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
@@ -58,7 +78,7 @@
                 </div>
             </div>
             <div class="text-center mt-4">
-                <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+                <p>Already have an account? <a href="{% url 'users:login' %}">Log In</a></p>
             </div>
         </div>
     </div>

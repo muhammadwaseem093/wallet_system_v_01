@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name ='wallet'
+
 urlpatterns = [
-    path('wallet-dashboard/', views.wallet_dashboard, name='wallet_dashboard'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]
