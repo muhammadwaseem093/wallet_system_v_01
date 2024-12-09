@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
 #import transactions 
-from .models import Transaction
+from transactions.models import Transaction
 
 def register(request):
     """Handles user registration."""

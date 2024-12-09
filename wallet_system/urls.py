@@ -24,5 +24,6 @@ urlpatterns = [
     path('merchant/', include('merchant.urls')),  # Merchant app
     path('payment-gateway/', include('payment_gateway.urls')),  # Payment Gateway app
     path('notifications/', include('notifications.urls')),  # Notifications app
+    path('transactions/', include('transactions.urls')),  # Transactions app
     
 ]
