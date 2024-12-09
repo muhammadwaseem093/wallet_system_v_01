@@ -4,5 +4,9 @@ from . import views
 app_name ='wallet'
 
 urlpatterns = [
-    path('dashboard/', views.dashboard, name='dashboard'),
+    
+    path('wallet_dashboard/', views.wallet_dashboard, name='wallet_dashboard'),
+    path('deposit/', views.deposit, name='deposit'),
+    path('withdraw/', views.withdraw, name='withdraw'),
+    path('transfer/', views.transfer, name='transfer'),
 ]

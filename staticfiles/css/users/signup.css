@@ -1,0 +1,248 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(to right, #b19cd9, #7b68ee);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Water Drop Style */
+.water-drop {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at top left,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.1)
+    );
+    box-shadow: 
+        inset 0px 5px 10px rgba(255, 255, 255, 0.6), /* Inner highlight */
+        0 15px 20px rgba(0, 0, 0, 0.2);            /* Outer shadow */
+    animation: float 8s infinite ease-in-out, pulse 3s infinite alternate;
+    opacity: 0.9;
+}
+
+/* Varying Sizes and Positions */
+.water-drop:nth-child(1) {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    left: 20%;
+    animation-duration: 7s;
+}
+
+.water-drop:nth-child(2) {
+    width: 180px;
+    height: 180px;
+    top: 40%;
+    left: 70%;
+    animation-duration: 9s;
+    animation-delay: 1s;
+}
+
+.water-drop:nth-child(3) {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    left: 25%;
+    animation-duration: 6s;
+}
+
+.water-drop:nth-child(4) {
+    width: 100px;
+    height: 100px;
+    top: 85%;
+    left: 15%;
+    animation-duration: 8s;
+}
+
+.water-drop:nth-child(5) {
+    width: 140px;
+    height: 140px;
+    top: 5%;
+    left: 80%;
+    animation-duration: 11s;
+}
+
+/* Floating Animation for Subtle Movement */
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-15px) translateX(10px);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Pulsing Animation for Realistic Reflection Effect */
+@keyframes pulse {
+    from {
+        box-shadow: inset 0px 5px 10px rgba(255, 255, 255, 0.6),
+                    0 15px 20px rgba(0, 0, 0, 0.2);
+    }
+    to {
+        box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.8),
+                    0 20px 30px rgba(0, 0, 0, 0.3);
+    }
+}
+
+
+.login-container {
+    width: 100%;
+    max-width: 550px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Card Styles */
+.signup-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.signup-card h2 {
+    position: relative; /* Make it relative to position pseudo-elements */
+    margin-bottom: 40px;
+    color: #7b68ee;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.signup-card h2::before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    width: 80px;
+    background: linear-gradient(90deg, #b19cd9, #7b68ee);
+    border-radius: 20px;
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+
+.signup-card h2::before {
+    left: 170px; 
+    top: 40px;
+    animation: wave-animation 3s ease-in-out infinite;
+}
+
+/* Right decorative line */
+/* ss */
+
+/* Animation for the wavy effect */
+@keyframes wave-animation {
+    0%, 100% {
+        transform: translateY(-50%) scaleX(1);
+    }
+    50% {
+        transform: translateY(-50%) scaleX(1.3);
+    }
+}
+
+@keyframes wave-animation-reverse {
+    0%, 100% {
+        transform: translateY(-50%) scaleX(1);
+    }
+    50% {
+        transform: translateY(-50%) scaleX(0.8);
+    }
+}
+
+
+/* Form Styles */
+.signup-card .form-label {
+    font-weight: 600;
+    color: #7b68ee;
+}
+
+.signup-card input {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.signup-card .forgot_password {
+    color: #7b68ee;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Button Styles */
+.signup-card button {
+    background: #7b68ee;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-card button:hover {
+    background: #5a46c1;
+}
+
+/* Social Login Styles */
+.social-login p {
+    font-size: 14px;
+    color: gray;
+}
+
+.social-icon {
+    color: #7b68ee;
+    font-size: 20px;
+    margin: 0 10px;
+}
+
+.social-icon:hover {
+    color: #5a46c1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .signup-card {
+        padding: 15px;
+    }
+    .signup-card h2 {
+        font-size: 24px;
+    }
+    .signup-card button {
+        font-size: 14px;
+    }
+    .social-icon {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .signup-card {
+        padding: 10px;
+    }
+    .signup-card h2 {
+        font-size: 20px;
+    }
+    .signup-card button {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .social-icon {
+        font-size: 16px;
+    }
+}

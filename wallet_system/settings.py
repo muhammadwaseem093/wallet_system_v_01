@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "merchant",      # Merchant app
     "payment_gateway",  # Payment gateway app
     "notifications",  # Notification app
+    "transactions",  # Transaction app
 ]
 
 MIDDLEWARE = [
@@ -89,20 +90,14 @@ CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
     "http://127.0.0.1:3000"
 ])
 
+AUTH_USER_MODEL = "users.User"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME', default='wallet_db'),
-        'USER': env('DB_USER', default='root'),
-        'PASSWORD': env('DB_PASSWORD', default='root'),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',  # For full Unicode support
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR/ 'db.sqlite3'
     }
 }
 

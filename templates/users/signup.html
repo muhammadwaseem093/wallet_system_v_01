@@ -28,23 +28,24 @@
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
+                            {% if form.username.errors%}
+                            <p class="text-danger"> {{form.username.errors}}</p>
+                            {% endif %}
                             {% if username_exists %}
                                 <p class="text-danger">Username already exists</p>
-                            {% endif %}
-                            {% if username_invalid %}
-                                <p class="text-danger">Username must be alphanumeric</p>
                             {% endif %}
 
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" required>
+                            {% if form.email.errors%}
+                            <p class="text-danger"> {{form.email.errors}}</p>
+                            {% endif %}
                             {% if email_exists %}
                                 <p class="text-danger">Email already exists</p>
                             {% endif %}
-                            {% if email_invalid %}
-                                <p class="text-danger">Email is invalid</p>
-                            {% endif %}
+
                         </div>
                     </div>
                     <!-- Column 2 -->
@@ -52,17 +53,17 @@
                         <div class="mb-3">
                             <label for="password1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password1" name="password1" required>
-                            {% if password_invalid %}
-                                <p class="text-danger">Password must be at least 8 characters long</p>
+                            {% if form.password1.errors%}
+                            <p class="text-danger"> {{form.password1.errors}}</p>
                             {% endif %}
+
                         </div>
                         <div class="mb-3">
                             <label for="password2" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="password2" name="password2" required>
-                            {% if password_mismatch %}
-                                <p class="text-danger">Passwords do not match</p>
+                            {% if form.password2.errors%}
+                            <p class="text-danger"> {{form.password2.errors}}</p>
                             {% endif %}
-                        </div>
                     </div>
                 </div>
                 <!-- Full-width button -->

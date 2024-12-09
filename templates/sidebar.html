@@ -1,22 +1,47 @@
 <div class="sidebar bg-primary text-white p-3">
-  <h4 class="mb-4">DASHBOARD</h4>
-  <ul class="nav flex-column">
-      <li class="nav-item mb-3">
-          <a href="#" class="nav-link text-white"><i class="fa fa-home me-2"></i> Home</a>
-      </li>
-      <li class="nav-item mb-3">
-          <a href="{% url 'wallet:dashboard' %}" class="nav-link text-white"><i class="fa fa-user me-2"></i> Wallet</a>
-      </li>
-      <li class="nav-item mb-3">
-          <a href="#" class="nav-link text-white"><i class="fa fa-chart-line me-2"></i>Transactions</a>
-      </li>
-      <li class="nav-item mb-3">
-    
-          <a href="#" class="nav-link text-white"><i class="fa fa-cogs me-2"></i> Setting</a>
+    <h4 class="mb-4">DASHBOARD</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item mb-3">
+            <a href="#" class="nav-link text-white"><i class="fa fa-home me-2"></i> Home</a>
+        </li>
 
-      </li>
-      <li class="nav-item">
-          <a href="users:logout" class="nav-link text-white"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
-      </li>
-  </ul>
+        {% if user.role == 'admin' %}
+            <!-- Admin-specific links -->
+            <li class="nav-item mb-3">
+                <a href="#" class="nav-link text-white"><i class="fa fa-users me-2"></i> Manage Users</a>
+            </li>
+            <li class="nav-item mb-3">
+                <a href="#" class="nav-link text-white"><i class="fa fa-cogs me-2"></i> Admin Settings</a>
+            </li>
+        {% elif user.role == 'merchant' %}
+            <!-- Merchant-specific links -->
+            <li class="nav-item mb-3">
+                <a href="{% url 'wallet:wallet_dashboard' %}" class="nav-link text-white"><i class="fa fa-wallet me-2"></i> Wallet</a>
+            </li>
+            <li class="nav-item mb-3">
+                <a href="#" class="nav-link text-white"><i class="fa fa-box-open me-2"></i> Manage Products</a>
+            </li>
+        {% elif user.role == 'user' %}
+            <!-- User-specific links -->
+            <li class="nav-item mb-3">
+                <a href="#" class="nav-link text-white"><i class="fa fa-user-circle me-2"></i> Profile</a>
+            </li>
+            <li class="nav-item mb-3">
+                <a href="#" class="nav-link text-white"><i class="fa fa-shopping-cart me-2"></i> My Orders</a>
+            </li>
+        {% endif %}
+
+        <!-- Common links for all roles -->
+        <li class="nav-item mb-3">
+            <a href="#" class="nav-link text-white"><i class="fa fa-chart-line me-2"></i> Transactions</a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="#" class="nav-link text-white"><i class="fa fa-cogs me-2"></i> Settings</a>
+        </li>
+
+        <!-- Logout Link -->
+        <li class="nav-item">
+            <a href="{% url 'users:logout' %}" class="nav-link text-white"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+        </li>
+    </ul>
 </div>

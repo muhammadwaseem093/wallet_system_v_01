@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
+#import transactions 
+from .models import Transaction
 
 def register(request):
     """Handles user registration."""
@@ -14,13 +16,14 @@ def register(request):
             user = form.save()
             auth_login(request, user)
             messages.success(request, 'Registration successful!')
-            return redirect(reverse('wallet:dashboard'))
+            return redirect(reverse('users:login'))
         else:
+            print("Forms errors: ",form.errors)
             messages.error(request, 'Please correct the errors below.')
     else:
         form = CustomUserCreationForm()
     
-    return render(request, 'user/signup.html', {'form': form})
+    return render(request, 'users/signup.html', {'form': form})
 
 
 def login(request):
@@ -34,7 +37,7 @@ def login(request):
             if user is not None:
                 auth_login(request, user)
                 messages.success(request, 'Successfully logged in!')
-                return redirect(reverse('wallet:dashboard'))  # Adjust as needed
+                return redirect(reverse('users:dashboard'))  # Adjust as needed
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -42,7 +45,7 @@ def login(request):
     else:
         form = AuthenticationForm()
     
-    return render(request, 'user/login.html', {'form': form})
+    return render(request, 'users/login.html', {'form': form})
 
 
 def logout(request):
@@ -54,10 +57,28 @@ def logout(request):
 
 @login_required
 def dashboard(request):
-    """Redirect users to appropriate dashboards based on their roles."""
-    if request.user.is_staff:
-        return redirect(reverse('admin:index'))  # Admin dashboard
-    elif request.user.groups.filter(name="Merchant").exists():
-        return render(request, 'merchant/merchant-dashboard.html')  # Merchant dashboard
+    #show user dashboard with handling recursion error
+    return render(request, 'dashboard.html')
+def dashboard_view(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            user = request.user
+            context = {
+                'user':user,
+                'total_transactions':Transaction.objects.filter(user=user).count(),
+                'total_users':User.objects.count() if user.role == 'admin' else None,
+                'total_sales': Transaction.objects.filter(user=user, type='sending')
+.aggregate(Sum('amount'))['amount__sum'] if user.role == 'merchant' else None,
+    'total_purchases': Transaction.objects.filter(user=user, type='receiving')
+    .aggregate(Sum('amount'))['amount__sum'] if user.role == 'merchant' else None,
+}
+            return render(request, 'admin/admin_dashboard.html', context)   
+        elif request.user.role == 'admin':
+            
+            return render(request, 'admin/admin_dashboard.html')
+        elif request.user.role == 'merchant':
+            return render(request, 'merchant/merchant_dashboard.html')
+        else:
+            return render(request, 'users/user_dashboard.html')
     else:
-        return render(request, 'user/user_dashboard.html')  # Default user dashboard
+        return redirect('users:login')
