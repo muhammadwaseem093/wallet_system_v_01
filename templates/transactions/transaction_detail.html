@@ -1,0 +1,39 @@
+{% inlcude 'base.html' %}
+<div class="container mt-5">
+    <h1 class="mb-4">Transaction Details</h1>
+    
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>ID:</th>
+                <td>{{ transaction.id }}</td>
+            </tr>
+            <tr>
+                <th>User:</th>
+                <td>{{ transaction.user }}</td>
+            </tr>
+            <tr>
+                <th>Merchant:</th>
+                <td>{{ transaction.merchant }}</td>
+            </tr>
+            <tr>
+                <th>Amount:</th>
+                <td>{{ transaction.amount }}</td>
+            </tr>
+            <tr>
+                <th>Status:</th>
+                <td>{{ transaction.status }}</td>
+            </tr>
+            <tr>
+                <th>Date:</th>
+                <td>{{ transaction.date }}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>{{ transaction.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{% url 'transaction_list' %}" class="btn btn-primary">Back to Transactions</a>
+</div>

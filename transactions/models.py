@@ -20,6 +20,6 @@ class Transaction(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     date = models.DateTimeField(auto_now_add=True)
     
-    def __str__(Self):
+    def __str__(self):
         return f"{self.user.username} - {self.amount} - {self.transaction_type} - {self.status}"
     

@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('process-payment/', views.process_payment, name='process_payment'),
-    path('history/',views.payment_history,name='payment_historys'),
+    path('init/', views.init_invoice, name='init_invoice'),
+    path('pay/<str:invoice_id>/', views.invoice_checkout, name='invoice_checkout'),
+    
 ]

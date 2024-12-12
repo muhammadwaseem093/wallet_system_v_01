@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Checkout</title>
+</head>
+<body>
+    <h1>Invoice Checkout - {{ invoice.invoice_id }}</h1>
+
+    <form method="POST" action="{% url 'validate_payment' invoice.invoice_id %}">
+        {% csrf_token %}
+        
+        <label>Select Payment Method</label>
+        <div>
+            {% for gateway in gateways %}
+                <input type="radio" name="payment_method" value="{{ gateway.id }}" id="method_{{ gateway.id }}">
+                <label for="method_{{ gateway.id }}">{{ gateway.name }}</label><br>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

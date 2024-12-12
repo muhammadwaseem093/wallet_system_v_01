@@ -1,0 +1,35 @@
+<div class="sidebar bg-success text-white p-3">
+    <h4 class="mb-4">Merchant Dashboard</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:merchant_dashboard' %}" class="nav-link text-white">
+                <i class="fa fa-home me-2"></i> Home
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:wallet_dashboard' %}" class="nav-link text-white">
+                <i class="fa fa-wallet me-2"></i> Wallet
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:transactions' %}" class="nav-link text-white">
+                <i class="fa fa-exchange-alt me-2"></i> Transactions
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:customer_management' %}" class="nav-link text-white">
+                <i class="fa fa-users me-2"></i> Customer Management
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:notifications' %}" class="nav-link text-white">
+                <i class="fa fa-bell me-2"></i> Notifications
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'merchant:settings' %}" class="nav-link text-white">
+                <i class="fa fa-cogs me-2"></i> Settings
+            </a>
+        </li>
+    </ul>
+</div>

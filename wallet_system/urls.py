@@ -20,9 +20,10 @@ from django.urls import path,include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('users/', include('users.urls')),  # Users app
+    # path('admin_dashboard', include('admin_dashboard.urls')),  # Admin Dashboard app
     path('wallet/', include('wallet.urls')),  # Wallet app
     path('merchant/', include('merchant.urls')),  # Merchant app
-    path('payment-gateway/', include('payment_gateway.urls')),  # Payment Gateway app
+    path('api/invoices/', include('payment_gateway.urls')),  # Payment Gateway app
     path('notifications/', include('notifications.urls')),  # Notifications app
     path('transactions/', include('transactions.urls')),  # Transactions app
     

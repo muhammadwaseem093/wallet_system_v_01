@@ -20,3 +20,6 @@ class Merchant(models.Model):
 
     def __str__(self):
         return self.businessname
+    
+class ActivityLog(models.Model):
+    pass

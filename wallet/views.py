@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.db.models import Sum
 from django.contrib import messages
 from decimal import Decimal
-from .models import Wallet
+from .models import Wallet, Transaction
 from django.http import HttpResponseServerError
+from django.utils import timezone
 # define login_required decorator
 from django.contrib.auth.decorators import login_required
 
@@ -15,7 +17,29 @@ def wallet_dashboard(request):
             wallet.balance = 0
             wallet.save()
             
-        return render(request, 'wallet/wallet_dashboard.html', {'wallet': wallet})
+        now = timezone.now()
+        
+        #calculate toal sending this month
+        total_sending = Transaction.objects.filter(
+            user=request.user,
+            transaction_type='sending',
+            date__month = now.month,
+            date__year =now.year
+        ).aggregate(sum('amount')[amount__sum])or 0.00
+        
+        total_receiving = Transaction.objects.filter(
+            user=request.user,
+            transaction_type='receiving',
+            date__month=now.month,
+            date__year=now.year
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+        
+            
+        return render(request, 'wallet/wallet_dashboard.html', {
+            'wallet': wallet,
+            'total_sending': total_sending,
+            'total_receiving':total_receiving
+            })
     except Exception as e:
         return HttpResponseServerError(f"An error occured: {str(e)}", status=500)
 
@@ -59,16 +83,13 @@ def transfer(request):
         wallet.balance -= amount
         wallet.save()
     return render(request, 'wallet/transfer.html', {'wallet': wallet})
-
 @login_required
-#count total transactions made by user 
-def total_transactions(request):
-    wallet = Wallet.objects.get(user=request.user)
-    transactions = wallet.transaction_set.all()
-    total_transactions = transactions.count()
-    print(total_transactions)
-    
-    return render(request, 'users/dashboard.html', {
-        'total_transactions': total_transactions,
-    })
+def wallet_balance(request):
+    """API to get wallet balance."""
+    try:
+        wallet = Wallet.objects.get(user=request.user)
+        data = {'balance': wallet.balance}
+    except Wallet.DoesNotExist:
+        data = {'balance': 0}
+    return JsonResponse(data)
 

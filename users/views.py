@@ -7,6 +7,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
 #import transactions 
 from transactions.models import Transaction
+from .models import User, ActivityLog
+
+
+
 
 def register(request):
     """Handles user registration."""
@@ -58,7 +62,7 @@ def logout(request):
 @login_required
 def dashboard(request):
     #show user dashboard with handling recursion error
-    return render(request, 'dashboard.html')
+    return render(request, 'users/user_dashboard.html')
 def dashboard_view(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -72,13 +76,71 @@ def dashboard_view(request):
     'total_purchases': Transaction.objects.filter(user=user, type='receiving')
     .aggregate(Sum('amount'))['amount__sum'] if user.role == 'merchant' else None,
 }
-            return render(request, 'admin/admin_dashboard.html', context)   
+            return render(request, 'users/user_dashboard.html', context)   
         elif request.user.role == 'admin':
             
-            return render(request, 'admin/admin_dashboard.html')
+            return render(request, 'users/user_dashboard.html')
         elif request.user.role == 'merchant':
             return render(request, 'merchant/merchant_dashboard.html')
         else:
             return render(request, 'users/user_dashboard.html')
     else:
         return redirect('users:login')
+    
+@login_required
+def activity_log(request):
+    logs = ActivityLog.objects.filter(user=request.user).order_by("-timestamp")
+    return render(request, 'users/activity_log.html', {'activity_logs':logs})
+    
+@login_required
+def change_password_view(request):
+        if request.method == 'POST':
+            old_password = request.POST.get('old_password')
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('confirm_password')
+            
+            if not request.user.check_password(old_password):
+                messages.error(request, 'Old password is incorrect!')
+            elif new_password != confirm_password:
+                messages.error(request, "New passwords do not match!")
+            else:
+                request.user.set_password(new_password)
+                request.user.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, 'Your password has been changed successfully!')
+                return redirect('users/user_dashboard')
+        return render(request, 'users/change_password.html')
+@login_required
+def my_wallet(request):
+    wallet = Wallet.objects.get(user=request.user)
+    return render(request, 'users/my_wallet.html', {'wallet':wallet})
+
+@login_required
+def notifications(request):
+    user_notifications = Notification.objects.filter(user=request.user,is_read=False)
+    return render(request, 'users/notifications.html', {'notifications':user_notifications})
+
+@login_required
+def profile_setting(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('firs_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        messages.success(request,'Profile Updated Successfully!')
+        return redirect('users/profile_setting')
+    return render(request, 'users/profile_setting.html', {'user':request.user})
+
+@login_required
+def user_details(request):
+    """API to get user details."""
+    user = request.user
+    data = {
+        'username': user.username,
+        'email': user.email,
+        'phone_number': user.phone_number,
+        'address': user.address,
+        'role': user.get_full_role_display(),
+    }
+    return JsonResponse({'user': data})

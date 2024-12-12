@@ -1,0 +1,35 @@
+<div class="sidebar bg-info text-white p-3">
+    <h4 class="mb-4">User Dashboard</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:user_dashboard' %}" class="nav-link text-white">
+                <i class="fa fa-home me-2"></i> Home
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:my_wallet' %}" class="nav-link text-white">
+                <i class="fa fa-wallet me-2"></i> My Wallet
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:transaction_history' %}" class="nav-link text-white">
+                <i class="fa fa-exchange-alt me-2"></i> Transaction History
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:support' %}" class="nav-link text-white">
+                <i class="fa fa-headset me-2"></i> Support
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:profile_settings' %}" class="nav-link text-white">
+                <i class="fa fa-user-cog me-2"></i> Profile Settings
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{% url 'users:notifications' %}" class="nav-link text-white">
+                <i class="fa fa-bell me-2"></i> Notifications
+            </a>
+        </li>
+    </ul>
+</div>
