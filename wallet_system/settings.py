@@ -33,8 +33,9 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['wallet-system-qhj4.onrender.com', 'localhost', '127.0.0.1']
 
-LOGIN_URL = 'users/login/'
-LOGIN_REDIRECT_URL = '/merchant/' 
+
+psql service=wallet_service
+
 
 # Application definition
 
