@@ -19,7 +19,7 @@ from django.urls import path,include
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('merchant/')),
+    path('', lambda request: redirect('users/')),
     path('merchant/', include('merchant.urls')),
     path("admin/", admin.site.urls),
     path('users/', include('users.urls')),  # Users app

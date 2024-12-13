@@ -33,7 +33,7 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
-
+LOGIN_URL = 'users/login/' 
 
 # Application definition
 
