@@ -132,7 +132,7 @@ AUTH_USER_MODEL = "users.User"
 # # if isinstance(database_url, bytes):
 # #     database_url = database_url.decode('urf-8')
 DATABASES = {
-    'default': dj_database_url.parse('postgresql://wallet_db:root@localhost:5432/wallet_db')
+    'default': dj_database_url.parse('postgresql://postgres:root@localhost:5432/wallet_db')
     
 }
 

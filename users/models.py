@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name="Phone Number")
+    phone_number = models.CharField(max_length=15, blank=True, null=False, verbose_name="Phone Number")
     address = models.TextField(blank=True, null=False, verbose_name="Address")
 
     ROLE_CHOICES = (
