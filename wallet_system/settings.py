@@ -31,9 +31,10 @@ SECRET_KEY = env('SECRET_KEY', default="django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['wallet_system.onrender.com', 'localhost', '127.0.0.1']
 
-LOGIN_URL = 'users/login/' 
+LOGIN_URL = 'users/login/'
+LOGIN_REDIRECT_URL = '/merchant/' 
 
 # Application definition
 
@@ -57,16 +58,16 @@ INSTALLED_APPS = [
 
 ]
 
-# CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000', 'http://127.0.0.1:3000']
-# CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
-# CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
+CSRF_TRUSTED_ORIGINS = ['https://wallet_system.onrender.com', 'http://localhost:8000', 'http://127.0.0.1:3000']
+CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
+CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    # "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -109,17 +110,26 @@ AUTH_USER_MODEL = "users.User"
 #         'NAME': BASE_DIR/ 'db.sqlite3'
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME', default='wallet_db'),
+#         'USER': env('DB_USER', default='root'),
+#         'PASSWORD': env('DB_PASSWORD', default=''),
+#         'HOST': env('DB_HOST', default='localhost'),
+#         'PORT': env('DB_PORT', default=5432),
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='wallet_db'),
-        'USER': env('DB_USER', default='root'),
-        'PASSWORD': env('DB_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default=5432),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
