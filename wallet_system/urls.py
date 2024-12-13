@@ -28,5 +28,5 @@ urlpatterns = [
     path('pay/',include('payment_gateway.urls')),
     path('notifications/', include('notifications.urls')),  # Notifications app
     path('transactions/', include('transactions.urls')),  # Transactions app
-        path("", admin.site.urls),
+        path("admin/", admin.site.urls),
 ]
