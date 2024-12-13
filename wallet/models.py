@@ -22,3 +22,5 @@ class Transaction(models.Model):
     
     def __str__(self):
         return f"Transaction {self.id} - {self.transaction_type} of {self.amount} on {self.timestamp}"
+    
+    

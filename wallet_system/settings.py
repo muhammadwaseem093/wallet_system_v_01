@@ -14,11 +14,11 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
-from dotenv import load_dotenv
 
-load_dotenv()
+
+
 # Initialize environment variables
-env = environ.Env(DEBUG=(bool, True))
+env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env()
 
 
@@ -66,7 +66,7 @@ INSTALLED_APPS = [
 CSRF_TRUSTED_ORIGINS = ['https://wallet-system-qhj4.onrender.com', 'http://localhost:8000', 'http://127.0.0.1:3000']
 CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 
 MIDDLEWARE = [
@@ -117,16 +117,7 @@ AUTH_USER_MODEL = "users.User"
 #         'NAME': BASE_DIR/ 'db.sqlite3'
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env('DB_NAME', default='wallet_db'),
-#         'USER': env('DB_USER', default='postgres'),
-#         'PASSWORD': env('DB_PASSWORD', default='root'),
-#         'HOST': env('DB_HOST', default='localhost'),
-#         'PORT': env('DB_PORT', default=5432),
-#     }
-# }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -137,8 +128,12 @@ AUTH_USER_MODEL = "users.User"
 #         'PORT': os.getenv('DB_PORT'),
 #     }
 # }
+# database_url = os.getenv('DATABASE_URL')
+# # if isinstance(database_url, bytes):
+# #     database_url = database_url.decode('urf-8')
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': dj_database_url.parse('postgresql://wallet_db:root@localhost:5432/wallet_db')
+    
 }
 
 # Password validation
@@ -176,6 +171,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # if not DEBUG:
 #     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles',
 #     STATICFILE_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage')
@@ -219,3 +216,5 @@ LOGGING = {
         "level": "DEBUG" if DEBUG else "INFO",
     },
 }
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
