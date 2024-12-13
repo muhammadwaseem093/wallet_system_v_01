@@ -29,9 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY', default="django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*y7j0=&^j!h9%$+sdzn&xn08p^5")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False)
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "requests",
     "corsheaders",  # For cross-origin requests if needed
     "users",         # Custom users app
     "wallet",        # Wallet app
@@ -55,9 +57,9 @@ INSTALLED_APPS = [
 
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000', 'http://127.0.0.1:3000']
-CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
-CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
+# CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000', 'http://127.0.0.1:3000']
+# CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
+# CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
 
 
 MIDDLEWARE = [
@@ -101,12 +103,23 @@ AUTH_USER_MODEL = "users.User"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR/ 'db.sqlite3'
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR/ 'db.sqlite3'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME', default='wallet_db'),
+        'USER': env('DB_USER', default='root'),
+        'PASSWORD': env('DB_PASSWORD', default=''),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default=5432),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
