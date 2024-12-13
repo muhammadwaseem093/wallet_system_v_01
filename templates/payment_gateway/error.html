@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            text-align: center;
+            padding: 50px;
+        }
+        .error-box {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            background-color: #f8d7da;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        a {
+            color: #721c24;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <h1>Oops! Something went wrong.</h1>
+        <p>{{ message }}</p>
+        <a href="/">Return to Home</a>
+    </div>
+</body>
+</html>

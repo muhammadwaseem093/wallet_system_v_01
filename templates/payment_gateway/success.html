@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d4edda;
+            color: #155724;
+            text-align: center;
+            padding: 50px;
+        }
+        .success-box {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            background-color: #d4edda;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        a {
+            color: #155724;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your payment.</p>
+    <p>Invoice ID: {{ invoice.invoice_id }}</p>
+    <p>Amount Paid: {{ invoice.amount }} {{ invoice.currency }}</p>
+    </div>
+</body>
+</html>

@@ -14,7 +14,7 @@ class Wallet(models.Model):
     
 # control debit and credit transactions
 class Transaction(models.Model):
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name='transactions')
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits = 10, decimal_places = 2)
     transaction_type = models.CharField(max_length=50, choices=[('credit', 'credit'), ('debit', 'debit')])
     timestamp = models.DateTimeField(auto_now_add=True)

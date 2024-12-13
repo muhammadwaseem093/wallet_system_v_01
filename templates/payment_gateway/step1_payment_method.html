@@ -1,0 +1,8 @@
+<form method="POST">
+    {% csrf_token %}
+    <h2>Select Payment Method</h2>
+    {% for gateway in gateways %}
+        <input type="radio" name="payment_method_id" value="{{ gateway.id }}"> {{ gateway.name }} <br>
+    {% endfor %}
+    <button type="submit">Next</button>
+</form>

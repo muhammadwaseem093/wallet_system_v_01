@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Fields</title>
+    <script>
+        // Function to toggle visibility of fields dynamically if needed
+        function toggleFields() {
+            const fieldsContainer = document.getElementById('fields-container');
+            fieldsContainer.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h2>Configure {{ payment_gateway.name }}</h2>
+    <form method="POST" action="{% url 'step3_review' invoice_id %}">
+        {% csrf_token %}
+        {% if payment_gateway.name == "PayPal" %}
+            <label for="client_id">Client ID:</label>
+            <input type="text" name="client_id" required><br>
+            <label for="client_secret">Client Secret:</label>
+            <input type="text" name="client_secret" required><br>
+            <label for="webhook_url">Webhook URL:</label>
+            <input type="url" name="webhook_url" required><br>
+            <label for="sandbox_mode">Sandbox Mode:</label>
+            <select name="sandbox_mode">
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select><br>
+        {% elif payment_gateway.name == "Stripe" %}
+            <label for="api_key">API Key:</label>
+            <input type="text" name="api_key" required><br>
+            <label for="publishable_key">Publishable Key:</label>
+            <input type="text" name="publishable_key" required><br>
+            <label for="webhook_secret">Webhook Secret:</label>
+            <input type="text" name="webhook_secret" required><br>
+            <label for="currency">Currency:</label>
+            <input type="text" name="currency" placeholder="e.g., USD" required><br>
+        {% elif payment_gateway.name == "Razorpay" %}
+            <label for="key_id">Key ID:</label>
+            <input type="text" name="key_id" required><br>
+            <label for="key_secret">Key Secret:</label>
+            <input type="text" name="key_secret" required><br>
+            <label for="webhook_url">Webhook URL:</label>
+            <input type="url" name="webhook_url" required><br>
+            <label for="currency">Currency:</label>
+            <input type="text" name="currency" placeholder="e.g., INR" required><br>
+        {% elif payment_gateway.name == "Authorize.Net" %}
+            <label for="api_login_id">API Login ID:</label>
+            <input type="text" name="api_login_id" required><br>
+            <label for="transaction_key">Transaction Key:</label>
+            <input type="text" name="transaction_key" required><br>
+            <label for="sandbox_mode">Sandbox Mode:</label>
+            <select name="sandbox_mode">
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select><br>
+            <label for="webhook_url">Webhook URL:</label>
+            <input type="url" name="webhook_url" required><br>
+        {% elif payment_gateway.name == "Square" %}
+            <label for="access_token">Access Token:</label>
+            <input type="text" name="access_token" required><br>
+            <label for="application_id">Application ID:</label>
+            <input type="text" name="application_id" required><br>
+            <label for="location_id">Location ID:</label>
+            <input type="text" name="location_id" required><br>
+            <label for="webhook_signature_key">Webhook Signature Key:</label>
+            <input type="text" name="webhook_signature_key" required><br>
+        {% endif %}
+        <button type="submit">Validate & Save</button>
+    </form>
+</body>
+</html>

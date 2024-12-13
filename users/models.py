@@ -24,7 +24,7 @@ class User(AbstractUser):
         verbose_name_plural = "Users"
 
 class ActivityLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activity_logs')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     activity = models.TextField()
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
