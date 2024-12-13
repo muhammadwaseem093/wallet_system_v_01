@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import dj_database_url
 
 # Initialize environment variables
 env = environ.Env(DEBUG=(bool, True))
@@ -34,7 +35,7 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = ['wallet-system-qhj4.onrender.com', 'localhost', '127.0.0.1']
 
 
-psql service=wallet_service
+
 
 
 # Application definition
@@ -66,6 +67,7 @@ CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -111,25 +113,28 @@ AUTH_USER_MODEL = "users.User"
 #         'NAME': BASE_DIR/ 'db.sqlite3'
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env('DB_NAME', default='wallet_db'),
-#         'USER': env('DB_USER', default='root'),
-#         'PASSWORD': env('DB_PASSWORD', default=''),
-#         'HOST': env('DB_HOST', default='localhost'),
-#         'PORT': env('DB_PORT', default=5432),
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'NAME': env('DB_NAME', default='wallet_db'),
+        'USER': env('DB_USER', default='postgres'),
+        'PASSWORD': env('DB_PASSWORD', default='root'),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default=5432),
     }
+}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+DATABASE = {
+    'default':dj_database_url.config('postgresql://wallet_db_nacq_user:root@dpg-ctduhtbtq21c73fuetog-a/wallet_db_nacq')
 }
 
 # Password validation
@@ -167,6 +172,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
+# if not DEBUG:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles',
+#     STATICFILE_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage')
+    
+    
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
