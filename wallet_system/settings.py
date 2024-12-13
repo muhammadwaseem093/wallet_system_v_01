@@ -63,9 +63,10 @@ INSTALLED_APPS = [
 
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://wallet_system.onrender.com', 'http://localhost:8000', 'http://127.0.0.1:3000']
+CSRF_TRUSTED_ORIGINS = ['https://wallet-system-qhj4.onrender.com', 'http://localhost:8000', 'http://127.0.0.1:3000']
 CSRF_COOKIE_SECURE = False  # Allow non-secure cookies
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access to CSRF token
+SECURE_SSL_REDIRECT = True
 
 
 MIDDLEWARE = [
