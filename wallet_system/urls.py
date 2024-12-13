@@ -21,7 +21,6 @@ from django.shortcuts import redirect
 urlpatterns = [
     # path('', lambda request: redirect('merchant/')),
     path('merchant/', include('merchant.urls')),
-
     path('users/', include('users.urls')),  # Users app
     # path('admin_dashboard', include('admin_dashboard.urls')),  # Admin Dashboard app
     path('wallet/', include('wallet.urls')),  # Wallet app

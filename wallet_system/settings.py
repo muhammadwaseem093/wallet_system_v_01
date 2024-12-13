@@ -14,10 +14,13 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
+from dotenv import load_dotenv
 
+load_dotenv()
 # Initialize environment variables
 env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,16 +116,16 @@ AUTH_USER_MODEL = "users.User"
 #         'NAME': BASE_DIR/ 'db.sqlite3'
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='wallet_db'),
-        'USER': env('DB_USER', default='postgres'),
-        'PASSWORD': env('DB_PASSWORD', default='root'),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default=5432),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME', default='wallet_db'),
+#         'USER': env('DB_USER', default='postgres'),
+#         'PASSWORD': env('DB_PASSWORD', default='root'),
+#         'HOST': env('DB_HOST', default='localhost'),
+#         'PORT': env('DB_PORT', default=5432),
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -133,8 +136,8 @@ DATABASES = {
 #         'PORT': os.getenv('DB_PORT'),
 #     }
 # }
-DATABASE = {
-    'default':dj_database_url.config('postgresql://wallet_db_nacq_user:root@dpg-ctduhtbtq21c73fuetog-a/wallet_db_nacq')
+DATABASES = {
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
 }
 
 # Password validation
