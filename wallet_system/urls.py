@@ -22,7 +22,7 @@ urlpatterns = [
     path('users/', include('users.urls')),  # Users app
     # path('admin_dashboard', include('admin_dashboard.urls')),  # Admin Dashboard app
     path('wallet/', include('wallet.urls')),  # Wallet app
-    path('merchant/', include('merchant.urls')),  # Merchant app
+    path('', include('merchant.urls')),  # Merchant app
     path('api/invoices/', include('payment_gateway.urls')),
     path('pay/',include('payment_gateway.urls')),
     path('notifications/', include('notifications.urls')),  # Notifications app
