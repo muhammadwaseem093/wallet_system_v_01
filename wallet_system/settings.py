@@ -31,7 +31,7 @@ SECRET_KEY = env('SECRET_KEY', default="django-insecure-w=%^xwf7j2%8c$i5q5zlb$2*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['wallet_system.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['wallet-system-qhj4.onrender.com', 'localhost', '127.0.0.1']
 
 LOGIN_URL = 'users/login/'
 LOGIN_REDIRECT_URL = '/merchant/' 
